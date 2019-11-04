@@ -11,7 +11,9 @@
                     </el-option>
                 </el-select>
             </el-menu-item>
-            <el-menu-item v-for="(category, index) in categories" v-bind:key="category.code" :index="index+2">{{ category.name }}</el-menu-item>
+            <el-menu-item v-for="category in categories" :key="category.code" :index="category.index" @click="goRouter(category.route)">
+                {{category.name }}
+            </el-menu-item>
         </el-menu>
     </div>
 </template>
@@ -31,21 +33,52 @@
                     name: '深圳',
                     code: 'shenzhen',
                 }],
-                value: '',
-                activeIndex: 2,
+                value: '北京',
+                activeIndex: '2',
                 categories: [{
                     name: '热点',
                     code: 'hot',
+                    index: '2',
+                    route: {
+                        name: 'homecode',
+                        params: {
+                            type: 'hot'
+                        }
+                    }
                 }, {
                     name: '时政',
                     code: 'politic',
+                    index: '3',
+                    route: {
+                        name: 'homecode',
+                        params: {
+                            type: 'politic'
+                        }
+                    }
                 }, {
                     name: '娱乐',
                     code: 'entertainment',
+                    index: '4',
+                    route: {
+                        name: 'homecode',
+                        params: {
+                            type: 'entertainment'
+                        }
+                    }
                 }],
 
             }
         },
+        mounted () {
+            this.goRouter(this.categories[this.activeIndex]['route']);
+        },
+        methods: {
+            handleSelect() {
+            },
+            goRouter (route) {
+                this.$router.push(route)
+            }
+        }
     }
 </script>
 
