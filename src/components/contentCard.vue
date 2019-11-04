@@ -33,6 +33,8 @@
         name: "contentCard",
         data() {
             return {
+                city: this.$route.params.city,
+                category: this.$route.params.category,
                 data_list: [
                     {
                         title: "惟其勇毅笃行，方显英雄本色",
@@ -57,17 +59,25 @@
                         content: this.data_list[idx].content,
                     }
                 });
+            },
+            getData(city, category) {
+                /* eslint-disable */
+                axios.get("http://localhost:8088/api/body/news?city="+city+"&category="+category+"&page=1")
+                    .then(response => {
+                        this.data_list = response.data.data.data_list
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+        },
+        watch: {
+            '$route.params' (val) {
+                this.getData(val.city, val.category);
             }
         },
         mounted () {
-            /* eslint-disable */
-            axios.get("http://localhost:8088/api/body/news?city=北京&category=热点&page=1")
-                .then(response => {
-                    this.data_list = response.data.data.data_list
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+            this.getData('北京', '热点');
         }
     }
 </script>

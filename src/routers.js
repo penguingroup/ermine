@@ -4,7 +4,7 @@ import contentDetail from './components/contentDetail'
 const routers = [
     // 首页
     {
-        path: 'homecode/:type?',
+        path: 'homecode/:type?/:category?/:city?',
         name: 'homecode',
         meta: {},
         component: contentCard

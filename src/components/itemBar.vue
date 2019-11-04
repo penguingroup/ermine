@@ -1,17 +1,17 @@
 <template>
     <div>
-        <el-menu :default-active="activeIndex" mode="horizontal" @change="handleChange">
+        <el-menu :default-active="activeIndex" mode="horizontal">
             <el-menu-item index="1">
-                <el-select v-model="value" placeholder="请选择">
+                <el-select v-model="value" placeholder="请选择" @change="handleChange">
                     <el-option
                             v-for="city in cities"
                             :key="city.code"
                             :label="city.name"
-                            :value="city.code">
+                            :value="city.name">
                     </el-option>
                 </el-select>
             </el-menu-item>
-            <el-menu-item v-for="category in categories" :key="category.code" :index="category.index" @click="goRouter(category.code)">
+            <el-menu-item v-for="category in categories" :key="category.code" :index="category.index" @click="goRouter(category.code, category.name, '北京')">
                 {{category.name }}
             </el-menu-item>
         </el-menu>
@@ -71,17 +71,20 @@
                 .catch(err => {
                     console.log(err);
                 });
-            this.goRouter(this.categories[this.activeIndex]['route']);
+            this.goRouter(this.categories[this.activeIndex]['code'], this.categories[this.activeIndex]['name'], this.city);
         },
         methods: {
-            handleChange() {
-                console.log("change");
+            handleChange(val) {
+                console.log(val);
+                this.goRouter(this.categories[this.activeIndex]['code'], this.categories[this.activeIndex]['name'], val);
             },
-            goRouter (route) {
+            goRouter (route, category, city) {
                 this.$router.push({
                     name: 'homecode',
                     params: {
-                        type: route
+                        type: route,
+                        category: category,
+                        city: city,
                     }
                 })
             }
