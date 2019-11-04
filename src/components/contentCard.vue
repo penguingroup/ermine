@@ -27,6 +27,8 @@
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
         name: "contentCard",
         data() {
@@ -51,6 +53,16 @@
                     name: 'contentdetail'
                 });
             }
+        },
+        mounted () {
+            /* eslint-disable */
+            axios.get("http://localhost:8088/api/body/news?city=北京&category=热点&page=1")
+                .then(response => {
+                    this.data_list = response.data.data.data_list
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     }
 </script>

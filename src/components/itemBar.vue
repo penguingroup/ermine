@@ -19,10 +19,13 @@
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
         name: "itemBar",
         data() {
             return {
+                city: '北京',
                 cities: [{
                     name: '北京',
                     code: 'beijing',
@@ -70,10 +73,34 @@
             }
         },
         mounted () {
+            /* eslint-disable */
+            axios.get("http://localhost:8088/api/header/city")
+                .then(response => this.cities = response.data.data)
+                .catch(err => {
+                    console.log(err);
+                });
+            axios.get("http://localhost:8088/api/header/category")
+                .then(response => {
+                    this.categories = response.data.data;
+                    for (let i=0; i<this.categories.length; i++) {
+                        this.categories[i].index = (i+2).toString();
+                        this.categories[i].route = {
+                            name: 'homecode',
+                            params: {
+                                type: this.categories[i].code,
+                                name: this.categories[i].name
+                            }
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
             this.goRouter(this.categories[this.activeIndex]['route']);
         },
         methods: {
             handleSelect() {
+
             },
             goRouter (route) {
                 this.$router.push(route)
