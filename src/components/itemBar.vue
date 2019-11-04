@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect">
+        <el-menu :default-active="activeIndex" mode="horizontal" @change="handleChange">
             <el-menu-item index="1">
                 <el-select v-model="value" placeholder="请选择">
                     <el-option
@@ -11,7 +11,7 @@
                     </el-option>
                 </el-select>
             </el-menu-item>
-            <el-menu-item v-for="category in categories" :key="category.code" :index="category.index" @click="goRouter(category.route)">
+            <el-menu-item v-for="category in categories" :key="category.code" :index="category.index" @click="goRouter(category.code)">
                 {{category.name }}
             </el-menu-item>
         </el-menu>
@@ -42,32 +42,14 @@
                     name: '热点',
                     code: 'hot',
                     index: '2',
-                    route: {
-                        name: 'homecode',
-                        params: {
-                            type: 'hot'
-                        }
-                    }
                 }, {
                     name: '时政',
                     code: 'politic',
                     index: '3',
-                    route: {
-                        name: 'homecode',
-                        params: {
-                            type: 'politic'
-                        }
-                    }
                 }, {
                     name: '娱乐',
                     code: 'entertainment',
                     index: '4',
-                    route: {
-                        name: 'homecode',
-                        params: {
-                            type: 'entertainment'
-                        }
-                    }
                 }],
 
             }
@@ -84,13 +66,6 @@
                     this.categories = response.data.data;
                     for (let i=0; i<this.categories.length; i++) {
                         this.categories[i].index = (i+2).toString();
-                        this.categories[i].route = {
-                            name: 'homecode',
-                            params: {
-                                type: this.categories[i].code,
-                                name: this.categories[i].name
-                            }
-                        }
                     }
                 })
                 .catch(err => {
@@ -99,11 +74,16 @@
             this.goRouter(this.categories[this.activeIndex]['route']);
         },
         methods: {
-            handleSelect() {
-
+            handleChange() {
+                console.log("change");
             },
             goRouter (route) {
-                this.$router.push(route)
+                this.$router.push({
+                    name: 'homecode',
+                    params: {
+                        type: route
+                    }
+                })
             }
         }
     }

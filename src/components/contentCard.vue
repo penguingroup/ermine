@@ -14,7 +14,7 @@
                                 <span>{{ data.title }}</span>
                                 <div class="bottom clearfix">
                                     <time class="time">{{ data.sub_title }}</time><br/>
-                                    <el-button type="text" class="button" @click="handlerGoDetail">阅读全文>></el-button>
+                                    <el-button type="text" class="button" @click="handlerGoDetail(index)">阅读全文>></el-button>
                                 </div>
                             </div>
                         </el-col>
@@ -38,19 +38,24 @@
                         title: "惟其勇毅笃行，方显英雄本色",
                         sub_title: "2019年上半年习近平主席引领中国特色大国外交开辟新境界。",
                         poster: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+                        content: "<h1>asdf</h1>",
                     },
                     {
                         title: "传百度查处数十起内部贪腐案件：涉及虚假打车、虚报加班",
                         sub_title: "百度整天没事瞎几把管，该管的不管，不该管的瞎管。",
                         poster: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+                        content: "<h1>1234</h1>",
                     }
                 ]
             };
         },
         methods: {
-            handlerGoDetail(){
+            handlerGoDetail(idx){
                 this.$router.push({
-                    name: 'contentdetail'
+                    name: 'contentdetail',
+                    params: {
+                        content: this.data_list[idx].content,
+                    }
                 });
             }
         },
