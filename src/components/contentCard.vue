@@ -62,7 +62,7 @@
             },
             getData(city, category) {
                 /* eslint-disable */
-                axios.get("http://localhost:8088/api/body/news?city="+city+"&category="+category+"&page=1")
+                axios.get("http://localhost:8088/api/body/news?city="+city+"&category="+category)
                     .then(response => {
                         this.data_list = response.data.data.data_list
                     })
@@ -73,6 +73,7 @@
         },
         watch: {
             '$route.params' (val) {
+                console.log(val);
                 this.getData(val.city, val.category);
             }
         },

@@ -11,7 +11,7 @@
                     </el-option>
                 </el-select>
             </el-menu-item>
-            <el-menu-item v-for="category in categories" :key="category.code" :index="category.index" @click="goRouter(category.code, category.name, '北京')">
+            <el-menu-item v-for="category in categories" :key="category.code" :index="category.index" @click="goRouter(category.code, category.name, city)">
                 {{category.name }}
             </el-menu-item>
         </el-menu>
@@ -76,6 +76,7 @@
         methods: {
             handleChange(val) {
                 console.log(val);
+                this.city = val;
                 this.goRouter(this.categories[this.activeIndex]['code'], this.categories[this.activeIndex]['name'], val);
             },
             goRouter (route, category, city) {
