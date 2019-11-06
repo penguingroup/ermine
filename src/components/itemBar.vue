@@ -51,7 +51,8 @@
                     code: 'entertainment',
                     index: '4',
                 }],
-
+                type: 'hot',
+                category: '热点',
             }
         },
         mounted () {
@@ -71,13 +72,17 @@
                 .catch(err => {
                     console.log(err);
                 });
-            this.goRouter(this.categories[this.activeIndex]['code'], this.categories[this.activeIndex]['name'], this.city);
+            this.type = this.categories[this.activeIndex]['code'];
+            this.category = this.categories[this.activeIndex]['name'];
+            this.goRouter(this.type, this.category, this.city);
         },
         methods: {
             handleChange(val) {
                 console.log(val);
+                console.log(this.type);
+                console.log(this.category);
                 this.city = val;
-                this.goRouter(this.categories[this.activeIndex]['code'], this.categories[this.activeIndex]['name'], val);
+                this.goRouter(this.type, this.category, val);
             },
             goRouter (route, category, city) {
                 this.$router.push({
